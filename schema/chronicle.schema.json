@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/REPLACE_WITH_GH_USERNAME/kimono-registry/schema/chronicle.schema.json",
+  "$id": "https://github.com/Minerva2281/kimono-registry/schema/chronicle.schema.json",
   "title": "Chronicle",
   "description": "文化資産の来歴記録。着物はこの様式の最初の実装。値段・査定額は含まない。",
   "type": "object",
