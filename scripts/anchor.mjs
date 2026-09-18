@@ -95,12 +95,13 @@ async function main() {
     }
   }
 
-  const client = createClient()
+  const client = await createClient()
     .use(signerFromFile(keypairPath))
     .use(network.name === "devnet" ? solanaDevnetRpc() : solanaMainnetRpc({ rpcUrl: network.solanaRpcUrl }));
 
   const memoInstruction = getAddMemoInstruction({ memo: memoPayload });
-  const signature = await client.sendTransaction([memoInstruction]);
+  const result = await client.sendTransaction([memoInstruction]);
+  const signature = result.context.signature;
 
   console.log(`\n✅ 刻みました。取引署名: ${signature}`);
   console.log(`エクスプローラーで確認: ${explorerTxUrl(network, signature)}`);

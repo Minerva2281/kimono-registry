@@ -7,8 +7,10 @@
   "scripts": {
     "devnet:new-keypair": "solana-keygen new --outfile ./devnet-keypair.json --no-bip39-passphrase --force",
     "devnet:airdrop": "solana airdrop 2 $(solana-keygen pubkey ./devnet-keypair.json) --url devnet",
-    "devnet:send-memo": "node scripts/send-memo.mjs devnet",
-    "mainnet:send-memo": "node scripts/send-memo.mjs mainnet"
+    "devnet:test-memo": "node scripts/test-memo.mjs",
+    "devnet:anchor": "node scripts/anchor.mjs devnet data/001-miho",
+    "mainnet:anchor": "node scripts/anchor.mjs mainnet data/001-miho",
+    "verify": "node scripts/verify.mjs data/001-miho"
   },
   "keywords": [
     "solana",
