@@ -1,0 +1,11 @@
+# 絶対に公開してはいけないもの(鍵・秘密情報)
+*keypair*.json
+*.key
+.env
+.env.*
+
+# 通常の除外
+node_modules/
+.DS_Store
+dist/
+*.log
