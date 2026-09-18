@@ -1,0 +1,29 @@
+{
+  "name": "kimono-registry",
+  "version": "0.1.0",
+  "description": "Kimono Registry — an open provenance format for cultural heirlooms, anchored on Solana. Kimono is the first reference implementation.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "devnet:new-keypair": "solana-keygen new --outfile ./devnet-keypair.json --no-bip39-passphrase --force",
+    "devnet:airdrop": "solana airdrop 2 $(solana-keygen pubkey ./devnet-keypair.json) --url devnet",
+    "devnet:send-memo": "node scripts/send-memo.mjs devnet",
+    "mainnet:send-memo": "node scripts/send-memo.mjs mainnet"
+  },
+  "keywords": [
+    "solana",
+    "provenance",
+    "kimono",
+    "cultural-heritage"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@irys/upload": "^0.0.15",
+    "@irys/upload-solana": "^0.1.8",
+    "@solana-program/memo": "^0.14.1",
+    "@solana/kit": "^8.3.0",
+    "@solana/kit-plugin-rpc": "^0.19.0",
+    "@solana/kit-plugin-signer": "^0.19.0"
+  }
+}

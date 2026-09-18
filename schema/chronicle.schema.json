@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/REPLACE_WITH_GH_USERNAME/kimono-registry/schema/chronicle.schema.json",
+  "title": "Chronicle",
+  "description": "文化資産の来歴記録。着物はこの様式の最初の実装。値段・査定額は含まない。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "item_type",
+    "measurements",
+    "owner_narrative_summary",
+    "filing_date",
+    "photos"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "kimono-registry-v1"
+    },
+    "item_type": {
+      "type": "string",
+      "description": "文化資産の種類(例: kimono)。着物以外の実装を見据えて汎用の項目名にしている。",
+      "examples": ["kimono"]
+    },
+    "measurements": {
+      "type": "object",
+      "description": "測れる事実のみ。単位はcm。",
+      "properties": {
+        "mitake_cm": { "type": "number", "description": "身丈" },
+        "yuki_cm": { "type": "number", "description": "裄" },
+        "sodetake_cm": { "type": "number", "description": "袖丈" }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "description": "専門家の見立て(意見)。事実ではなく見立てであることを明記する。",
+      "properties": {
+        "category": { "type": "string", "description": "例: 振袖、訪問着" },
+        "assessed_by": { "type": "string", "description": "見立てを行った専門家(任意)" },
+        "notes": { "type": "string" }
+      }
+    },
+    "era_estimate": {
+      "type": "object",
+      "description": "年代の推定。断定はしない。",
+      "properties": {
+        "period": { "type": "string", "description": "例: 昭和中期(推定)" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "owner_narrative_summary": {
+      "type": "string",
+      "description": "持ち主の語りの要約。記憶の記録であり、事実の確定ではない。"
+    },
+    "filing_date": {
+      "type": "string",
+      "format": "date",
+      "description": "戸籍への届け出日付(YYYY-MM-DD)"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri",
+        "description": "分散ストレージ(Arweave)上の写真へのURI"
+      },
+      "minItems": 1
+    }
+  },
+  "not": {
+    "required": ["valuation", "price", "appraised_value"]
+  }
+}

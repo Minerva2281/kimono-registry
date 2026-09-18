@@ -9,3 +9,7 @@ node_modules/
 .DS_Store
 dist/
 *.log
+
+# 写真の生ファイル(アップロード後はArweaveのURLがchronicle.jsonに残るので、
+# 巨大な画像そのものをリポジトリに入れる必要はない)
+data/*/photos/

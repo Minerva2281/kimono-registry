@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>着物の戸籍 | Kimono Registry</title>
+  <style>
+    body {
+      font-family: -apple-system, "Hiragino Sans", sans-serif;
+      max-width: 640px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.7;
+      color: #222;
+    }
+    h1 { font-size: 1.4rem; }
+    .photos { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .photo { max-width: 200px; border-radius: 6px; }
+    dl { display: grid; grid-template-columns: 10em 1fr; gap: 0.5rem 1rem; }
+    dt { color: #666; }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #verify-status { margin-top: 0.8rem; font-weight: bold; }
+    .ok { color: #1a7f37; }
+    .ng { color: #c0392b; }
+    footer { margin-top: 3rem; font-size: 0.85rem; color: #888; }
+  </style>
+</head>
+<body>
+  <h1>着物の戸籍</h1>
+  <p>ここに刻まれた記録は、査定額を一切含みません。事実・見立て・語りだけを、そのまま残しています。</p>
+
+  <div id="chronicle">読み込み中…</div>
+
+  <button id="verify-button">この記録を検証する</button>
+  <div id="verify-status"></div>
+
+  <footer>
+    様式とコードはすべて公開されています。<a href="https://github.com/REPLACE_WITH_GH_USERNAME/kimono-registry" target="_blank" rel="noopener">GitHubで見る</a>
+  </footer>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
