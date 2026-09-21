@@ -7,8 +7,8 @@
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { createSolanaRpc } from "@solana/kit";
-import { getMemosFromInstructions } from "@solana-program/memo";
 import { canonicalize, sha256Hex } from "./lib/canonical.mjs";
 
 export async function verify(manifest) {
@@ -33,11 +33,15 @@ export async function verify(manifest) {
 
   if (!tx) throw new Error("指定された取引がチェーン上に見つかりません");
 
+  // jsonParsed encoding では、メモ命令は { program: "spl-memo", parsed: "<テキスト>" } という形で返る
+  // (Kit純正のInstruction型とは形が異なるため、getMemosFromInstructionsは使わずここで直接読む)
   const instructions = tx.transaction.message.instructions;
-  const memos = getMemosFromInstructions(instructions);
-  if (memos.length === 0) throw new Error("この取引にメモが見つかりません");
+  const memoIx = instructions.find(
+    (ix) => ix.program === "spl-memo" || ix.programId === "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
+  );
+  if (!memoIx) throw new Error("この取引にメモが見つかりません");
 
-  const onChainPayload = JSON.parse(memos[0].memo);
+  const onChainPayload = JSON.parse(memoIx.parsed);
   const onChainHash = onChainPayload.sha256;
 
   const match = recomputedHash === onChainHash;
@@ -69,7 +73,7 @@ async function main() {
 
 // このファイルが直接実行されたときだけmain()を動かす
 // (site/側から import して使い回せるようにするため)
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((err) => {
     console.error("\n❌ エラー:", err.message);
     process.exit(1);

@@ -36,16 +36,33 @@ async function main() {
     ? await Uploader(Solana).withWallet(await readFile(keypairPath, "utf8").then((t) => new Uint8Array(JSON.parse(t)))).withRpc(network.solanaRpcUrl).devnet()
     : await Uploader(Solana).withWallet(await readFile(keypairPath, "utf8").then((t) => new Uint8Array(JSON.parse(t)))).withRpc(network.solanaRpcUrl);
 
-  console.log(`Irysの残高: ${await irysUploader.getLoadedBalance()} atomic units`);
+  const startedAt = Date.now();
+  const balanceBefore = await irysUploader.getLoadedBalance();
+  console.log(`Irysの残高(開始時): ${balanceBefore} atomic units`);
 
-  // --- 2. 写真をアップロード ---
+  // --- 1.5 必要な費用を見積もり、不足分だけ入金する ---
   let photoFiles = [];
   try {
     photoFiles = (await readdir(photosDir)).filter((f) => !f.startsWith("."));
   } catch {
     console.log("(photos フォルダが見つかりません。写真なしで進めます)");
   }
+  const { statSync } = await import("node:fs");
+  let totalBytes = 0;
+  for (const file of photoFiles) totalBytes += statSync(path.join(photosDir, file)).size;
+  totalBytes += Buffer.byteLength(JSON.stringify(chronicle)) + 2048; // 履歴書本体の概算+余裕分
 
+  const priceAtomic = await irysUploader.getPrice(totalBytes);
+  console.log(`見積もりサイズ: ${totalBytes} bytes / 見積もり費用: ${priceAtomic} atomic units`);
+
+  if (priceAtomic.isGreaterThan(balanceBefore)) {
+    const need = priceAtomic.minus(balanceBefore);
+    console.log(`残高不足のため入金します: ${need} atomic units`);
+    await irysUploader.fund(need);
+    console.log(`入金後の残高: ${await irysUploader.getLoadedBalance()} atomic units`);
+  }
+
+  // --- 2. 写真をアップロード ---
   const photoUrls = [];
   for (const file of photoFiles) {
     const filePath = path.join(photosDir, file);
@@ -65,6 +82,12 @@ async function main() {
   });
   const chronicleUrl = `https://gateway.irys.xyz/${chronicleReceipt.id}`;
   console.log(`  → ${chronicleUrl}`);
+
+  const balanceAfter = await irysUploader.getLoadedBalance();
+  const irysElapsedMs = Date.now() - startedAt;
+  console.log(`\nIrys側の所要時間: ${(irysElapsedMs / 1000).toFixed(1)}秒`);
+  console.log(`Irys残高(終了時): ${balanceAfter} atomic units`);
+  console.log(`実際に使われた費用: ${balanceBefore.minus(balanceAfter).abs()} atomic units(入金分含む差引は入金額を参照)`);
 
   // --- 4. 指紋(ハッシュ)を計算 ---
   const hash = await sha256Hex(canonicalize(chronicle));
@@ -117,6 +140,12 @@ async function main() {
   const manifestPath = path.join(folder, "manifest.json");
   await writeFile(manifestPath, JSON.stringify(manifest, null, 2));
   console.log(`\nmanifestを保存しました: ${manifestPath}`);
+
+  const totalElapsedMs = Date.now() - startedAt;
+  console.log(`\n=== まとめ ===`);
+  console.log(`合計所要時間: ${(totalElapsedMs / 1000).toFixed(1)}秒`);
+  console.log(`アップロードサイズ: ${totalBytes} bytes`);
+  console.log(`Irys残高 開始時→終了時: ${balanceBefore} → ${balanceAfter} atomic units`);
 }
 
 main().catch((err) => {

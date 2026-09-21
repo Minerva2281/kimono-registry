@@ -1,0 +1,7 @@
+{
+  "network": "devnet",
+  "chronicle_url": "https://gateway.irys.xyz/9xtDhq2DKueAoeUhcwLqgNYqcCH9Yj2FMXdPSiqZReRv",
+  "solana_signature": "4kEmhK9ZxqgNkUJRBMv128VtsAxXzPdbpG77AtFJohuhHhrGp72e1JswXoPAyS5fF6idumVLUAAuiHUfSs5GBX4c",
+  "explorer_url": "https://explorer.solana.com/tx/4kEmhK9ZxqgNkUJRBMv128VtsAxXzPdbpG77AtFJohuhHhrGp72e1JswXoPAyS5fF6idumVLUAAuiHUfSs5GBX4c?cluster=devnet",
+  "sha256": "f5b4197fd5ee2df699cce81d3016847dd37a4303c868a99bbc5407ca07f2da3b"
+}

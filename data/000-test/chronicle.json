@@ -1,0 +1,21 @@
+{
+  "schema_version": "kimono-registry-v1",
+  "item_type": "kimono",
+  "measurements": {
+    "mitake_cm": 160,
+    "yuki_cm": 68,
+    "sodetake_cm": 49
+  },
+  "classification": {
+    "category": "テスト用ダミーデータ(訪問着相当)",
+    "assessed_by": "",
+    "notes": "これは9/21のIrysアップロード検証用のテストデータです。実在の着物ではありません。"
+  },
+  "era_estimate": {
+    "period": "テスト用",
+    "confidence": "low"
+  },
+  "owner_narrative_summary": "これはArweaveへの実アップロード検証のためのテストの履歴書です。写真2枚・テキストがdevnet上に正しく保存され、URLが返ってくるかを確認します。",
+  "filing_date": "2026-09-21",
+  "photos": []
+}
