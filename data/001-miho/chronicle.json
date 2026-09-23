@@ -2,20 +2,18 @@
   "schema_version": "kimono-registry-v1",
   "item_type": "kimono",
   "measurements": {
-    "mitake_cm": null,
-    "yuki_cm": null,
-    "sodetake_cm": null
+    "status": "実測待ち"
   },
   "classification": {
-    "category": "",
+    "category": "見立て未取得",
     "assessed_by": "",
-    "notes": ""
+    "notes": "着物文化の専門家(松丸明子先生)による見立てを依頼中です。取得でき次第、追記します。"
   },
   "era_estimate": {
-    "period": "",
-    "confidence": "medium"
+    "period": "見立て未取得",
+    "confidence": "low"
   },
-  "owner_narrative_summary": "",
+  "owner_narrative_summary": "就職した年、母と新宿伊勢丹の呉服売り場で選んだ一枚です。支払いは母ではなく自分がすることになりました——初めてのボーナスをもらった頃で、それが今も忘れられない思い出です。友人の結婚式など何度か袖を通し、一番心に残っているのは2024年12月、東京大学でこの着物を着てプレゼンをしたことです。2023年にイギリスを訪れた際、英国の美術館へ寄贈する話が決まり、今は渡る日を待ちながら手元で保管しています。証紙はすでに失われており、紋の有無もはっきりしません。手放せることへの安堵と、まだ手元にあることの心強さ、その両方を感じています。",
   "filing_date": "2026-09-23",
   "photos": []
 }
